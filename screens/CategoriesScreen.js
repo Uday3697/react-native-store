@@ -9,12 +9,12 @@ const CategoriesScreen = () => {
             <CategoryGridTile title={itemData.item.title}  color={itemData.item.color}/>
         )
     }
-
+ 
     return ( 
         <View>
             <FlatList
               data={CATEGORIES} 
-              keyExtractor={(item)=>item.id }
+              keyExtractor={(item)=>item.id } 
               renderItem={renderCategoryItem}
               numColumns={2}
             /> 
@@ -25,5 +25,5 @@ const CategoriesScreen = () => {
 export default CategoriesScreen
 
 const styles = StyleSheet.create({
-    
+
 })
