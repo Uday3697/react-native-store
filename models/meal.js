@@ -19,7 +19,7 @@ class Meal {
       this.title = title;
       this.imageUrl = imageUrl;
       this.ingredients = ingredients;
-      this.steptes = steps;
+      this.steps = steps;
       this.duration = duration;
       this.complexity = complexity;
       this.affordability = affordability;
