@@ -1,9 +1,9 @@
 import { FlatList, ScrollView, StyleSheet, Text, View } from 'react-native'
-import React from 'react'
-import { MEALS } from '../data/dummy-data'
+import React, {  useLayoutEffect } from 'react'
+import { CATEGORIES, MEALS } from '../data/dummy-data'
 import MealItem from '../components/MealItem'
 
-const MealsOverviewScreen = ({ route }) => {
+const MealsOverviewScreen = ({ route, navigation }) => {
     const catId = route.params.categoryId
 
 
@@ -11,21 +11,29 @@ const MealsOverviewScreen = ({ route }) => {
         return mealItem.categoryIds.indexOf(catId) >= 0;
     })
 
-    function  renderMealItem(itemData){
-        const item=itemData.item
-        const mealItemProps={
-            title:item.title,
-            imageUrl:item.imageUrl,
-            affordability:item.affordability,
-            complexity:item.complexity,
-            duration:item.duration
+  
+    function renderMealItem(itemData) {
+        const item = itemData.item
+        const mealItemProps = {
+            title: item.title,
+            imageUrl: item.imageUrl,
+            affordability: item.affordability,
+            complexity: item.complexity,
+            duration: item.duration
 
         }
         return (
-            <MealItem {...mealItemProps}/>
+            <MealItem {...mealItemProps} />
         )
     }
 
+    useLayoutEffect(()=>{
+    const categoryTitle = CATEGORIES.find((category) => category.id === catId).title
+        navigation.setOptions({
+            title: categoryTitle
+        })
+    
+    },[catId,navigation])
 
     return (
         <View style={styles.container}>
@@ -33,7 +41,7 @@ const MealsOverviewScreen = ({ route }) => {
                 <FlatList
                     data={displayedMeals}
                     renderItem={renderMealItem}
-                    keyExtractor={(item)=>item.id}
+                    keyExtractor={(item) => item.id}
                 />
             </ScrollView>
         </View>
