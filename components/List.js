@@ -4,9 +4,12 @@ import React from 'react'
 const List = ({ data }) => {
     return (
         data.map((datapoint) => (
-            <View key={datapoint} styles={styles.listItem}>
-                <Text style={styles.itemText}>{datapoint}</Text>
+            <View styles={styles.listItem}>
+                <View key={datapoint} styles={styles.listItem}>
+                    <Text style={styles.listItem}>{datapoint}</Text>
+                </View>
             </View>
+
         ))
     )
 }
