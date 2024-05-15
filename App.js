@@ -5,10 +5,34 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import MealsOverviewScreen from './screens/MealsOverviewScreen';
 import MealDetailsScreen from './screens/MealDetailsScreen';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import FavourateScreen from './screens/FavourateScreen';
+import { Ionicons } from '@expo/vector-icons';
 
 const Stack = createNativeStackNavigator()
+const Drawer=createDrawerNavigator()
 
 
+function DrawerNavigator(){
+  return (
+  <Drawer.Navigator screenOptions={{
+    headerStyle:{backgroundColor:"#351401"},
+    headerTintColor:"white",
+    sceneContainerStyle:{backgroundColor:"#3f2f25"},
+    drawerContentStyle:{backgroundColor:"#351402"},
+    drawerInactiveTintColor:"white",
+    drawerInactiveTintColor:'#351401',
+    drawerActiveBackgroundColor:"#e4BAA1"
+  }}>
+    <Drawer.Screen name='MealsCategories'  component={CategoriesScreen} options={{
+      drawerIcon:({color,size})=>(
+        <Ionicons color={color} size={size} name='' />
+      )
+    }}/>
+    <Drawer.Screen name='Favourate' component={FavourateScreen} />
+  </Drawer.Navigator>
+  )
+}
 
 
 export default function App() {
@@ -25,22 +49,14 @@ export default function App() {
           }}
         >
           <Stack.Screen
-            name="MealsCategories"
-            component={CategoriesScreen}
-            options={{ title: "All Category" }}
+            name="Drawer"
+            component={DrawerNavigator}
+            options={{headerShown:false}}
           />
           <Stack.Screen name='MealsOverview'
             component={MealsOverviewScreen}
-            // options={({ route,navigation }) => {
-            //   const catId = route?.params?.categoryId;
-            //   return {
-            //     title: catId ? catId : 'Meals Categories'
-            //   };
-            // }} 
             />
-            <Stack.Screen name='MealDetailsScreen' component={MealDetailsScreen} options={{headerRight:()=>{
-              return <Button title='tap' />
-            }}}/>
+            <Stack.Screen name='MealDetailsScreen' component={MealDetailsScreen} options={{title:"About the meal"}}/>
         </Stack.Navigator>
 
       </NavigationContainer>
