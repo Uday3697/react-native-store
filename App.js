@@ -22,7 +22,6 @@ function DrawerNavigator() {
       sceneContainerStyle: { backgroundColor: "#3f2f25" },
       drawerContentStyle: { backgroundColor: "#351402" },
       drawerInactiveTintColor: "white",
-      drawerInactiveTintColor: '#351401',
       drawerActiveBackgroundColor: "#e4BAA1"
     }}>
       <Drawer.Screen name='MealsCategories' component={CategoriesScreen} options={{
