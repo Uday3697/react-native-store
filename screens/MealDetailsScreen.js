@@ -1,24 +1,34 @@
 import { Image, ScrollView, StyleSheet, Text, View } from 'react-native'
-import React, { useLayoutEffect } from 'react'
+import React, { useContext, useLayoutEffect } from 'react'
 import { MEALS } from '../data/dummy-data'
 import MealDetails from '../components/MealDetails'
 import SubTitle from '../components/SubTitle'
 import List from '../components/List'
 import IconButton from '../components/IconButton'
-const MealDetailsScreen = ({ route ,navigation}) => {
+import { FavoritesContext } from '../store/context/favorites-context'
+
+const MealDetailsScreen = ({ route, navigation }) => {
+    const favoriteMealsCtx = useContext(FavoritesContext);
     const mealId = route.params.mealId
     const selectedMeal = MEALS.find((meal) => meal.id === mealId)
+    const mealIsFavorite = favoriteMealsCtx.ids.includes(mealId)
 
-    function headerbuttonPressHandler(){
-        console.log("presss")
+    function changeFavoriteStatusHandler() {
+        if(mealIsFavorite){
+            favoriteMealsCtx.removeFavorite(mealId)
+        }else favoriteMealsCtx.addFavorite(mealId)
     }
-    useLayoutEffect(()=>{
+    useLayoutEffect(() => {
         navigation.setOptions({
-            headerRight:()=>{
-                return <IconButton  onPress={headerbuttonPressHandler} icon='star' color="white"/>
+            headerRight: () => {
+                return <IconButton
+                    onPress={changeFavoriteStatusHandler}
+                    icon={mealIsFavorite?'star':'star-outline' }
+                    color="white"
+                />
             }
         })
-    })
+    },[navigation,changeFavoriteStatusHandler])
     return (
         <ScrollView  >
             <Image source={{ uri: selectedMeal?.imageUrl }} style={styles.image} />
@@ -30,12 +40,12 @@ const MealDetailsScreen = ({ route ,navigation}) => {
                 textStyle={styles.detailText}
             />
             <View style={styles.listOuterContainer}>
-            <View style={styles.listContainer}>
-                <SubTitle>Indegrendts</SubTitle>
-                <List data={selectedMeal.ingredients} />
-                <SubTitle>Steps</SubTitle>
-                <List data={selectedMeal.steps} />
-            </View>
+                <View style={styles.listContainer}>
+                    <SubTitle>Indegrendts</SubTitle>
+                    <List data={selectedMeal.ingredients} />
+                    <SubTitle>Steps</SubTitle>
+                    <List data={selectedMeal.steps} />
+                </View>
             </View>
 
 
